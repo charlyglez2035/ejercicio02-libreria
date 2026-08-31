@@ -1,0 +1,20 @@
+# Variables de entorno / secretos
+.env
+
+# Dependencias
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# VS Code opcional
+.vscode/
+
+# Archivos subidos durante ejecución
+uploads/*
+!uploads/.gitkeep
