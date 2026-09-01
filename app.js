@@ -12,6 +12,10 @@ const requireAuth =
 const errorHandler =
     require('./middleware/errorHandler');
 
+// --------------------------------------------------
+// RUTAS
+// --------------------------------------------------
+
 // Autenticación / catálogo
 const authRoutes =
     require('./routes/auth');
@@ -48,7 +52,13 @@ const bookConceptRoutes =
 const bookImageRoutes =
     require('./routes/bookImages');
 
+// --------------------------------------------------
+// APP
+// --------------------------------------------------
+
 const app = express();
+
+const libraryRouter = express.Router();
 
 const HOST =
     process.env.HOST ||
@@ -90,8 +100,16 @@ app.use(
 // SESIONES
 // --------------------------------------------------
 
+if (!process.env.SESSION_SECRET) {
+    throw new Error(
+        'SESSION_SECRET no está definida en .env'
+    );
+}
+
 app.use(
     session({
+        name: 'library.sid',
+
         secret:
             process.env
                 .SESSION_SECRET,
@@ -114,7 +132,9 @@ app.use(
             maxAge:
                 60 *
                 60 *
-                1000
+                1000,
+
+            path: '/library'
         }
     })
 );
@@ -123,19 +143,29 @@ app.use(
 // RECURSOS ESTÁTICOS
 // --------------------------------------------------
 
+// public/
+// Ejemplo:
+// public/css/styles.css
+// -> /library/css/styles.css
 app.use(
+    '/library',
     express.static(
         path.join(
             __dirname,
             'public'
-        )
+        ),
+        {
+            dotfiles: 'deny'
+        }
     )
 );
 
-// uploads no se sirven como código ejecutable.
-// Requieren una sesión válida.
+// uploads/ requieren autenticación.
+// Ejemplo:
+// uploads/book.jpg
+// -> /library/uploads/book.jpg
 app.use(
-    '/uploads',
+    '/library/uploads',
     requireAuth,
     express.static(
         path.join(
@@ -150,22 +180,39 @@ app.use(
 );
 
 // --------------------------------------------------
-// HOME
+// REDIRECCIÓN DE RAÍZ
 // --------------------------------------------------
 
+// Si alguien entra a:
+// http://127.0.0.1:3000/
+// lo enviamos a /library
 app.get(
     '/',
     (req, res) => {
+        return res.redirect(
+            '/library'
+        );
+    }
+);
+
+// --------------------------------------------------
+// HOME DE /library
+// --------------------------------------------------
+
+libraryRouter.get(
+    '/',
+    (req, res) => {
         if (
+            req.session &&
             req.session.user
         ) {
             return res.redirect(
-                '/catalog'
+                '/library/catalog'
             );
         }
 
         return res.redirect(
-            '/login'
+            '/library/login'
         );
     }
 );
@@ -174,7 +221,7 @@ app.get(
 // AUTENTICACIÓN
 // --------------------------------------------------
 
-app.use(
+libraryRouter.use(
     '/',
     authRoutes
 );
@@ -183,7 +230,7 @@ app.use(
 // CATÁLOGO
 // --------------------------------------------------
 
-app.use(
+libraryRouter.use(
     '/catalog',
     catalogRoutes
 );
@@ -193,12 +240,12 @@ app.use(
 // Deben montarse antes del router general de books.
 // --------------------------------------------------
 
-app.use(
+libraryRouter.use(
     '/admin/books/:bookId/concepts',
     bookConceptRoutes
 );
 
-app.use(
+libraryRouter.use(
     '/admin/books/:bookId/images',
     bookImageRoutes
 );
@@ -207,32 +254,32 @@ app.use(
 // CRUD ADMINISTRATIVOS
 // --------------------------------------------------
 
-app.use(
+libraryRouter.use(
     '/admin/books',
     booksRoutes
 );
 
-app.use(
+libraryRouter.use(
     '/admin/authors',
     authorsRoutes
 );
 
-app.use(
+libraryRouter.use(
     '/admin/genres',
     genresRoutes
 );
 
-app.use(
+libraryRouter.use(
     '/admin/formats',
     formatsRoutes
 );
 
-app.use(
+libraryRouter.use(
     '/admin/categories',
     categoriesRoutes
 );
 
-app.use(
+libraryRouter.use(
     '/admin/concepts',
     conceptsRoutes
 );
@@ -241,9 +288,18 @@ app.use(
 // PANEL ADMIN
 // --------------------------------------------------
 
-app.use(
+libraryRouter.use(
     '/admin',
     adminRoutes
+);
+
+// --------------------------------------------------
+// MONTAR TODA LA APLICACIÓN EN /library
+// --------------------------------------------------
+
+app.use(
+    '/library',
+    libraryRouter
 );
 
 // --------------------------------------------------
@@ -294,7 +350,7 @@ async function startServer() {
             HOST,
             () => {
                 console.log(
-                    `Servidor: http://${HOST}:${PORT}`
+                    `Servidor: http://${HOST}:${PORT}/library`
                 );
             }
         );
