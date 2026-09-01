@@ -22,13 +22,13 @@
     <% } %>
 
     <p>
-        <a href="/admin/authors/new">
+        <a href="/library/admin/authors/new">
             Crear nuevo autor
         </a>
     </p>
 
     <p>
-        <a href="/admin">
+        <a href="/library/admin">
             Regresar al panel
         </a>
     </p>
@@ -63,7 +63,7 @@
                     <td>
 
                         <a
-                            href="/admin/authors/<%= author.author_id %>"
+                            href="/library/admin/authors/<%= author.author_id %>"
                         >
                             Ver
                         </a>
@@ -71,7 +71,7 @@
                         |
 
                         <a
-                            href="/admin/authors/<%= author.author_id %>/edit"
+                            href="/library/admin/authors/<%= author.author_id %>/edit"
                         >
                             Editar
                         </a>
@@ -80,7 +80,7 @@
 
                         <form
                             method="POST"
-                            action="/admin/authors/<%= author.author_id %>/delete"
+                            action="/library/admin/authors/<%= author.author_id %>/delete"
                             style="display:inline"
                             onsubmit="return confirm('¿Eliminar este autor?');"
                         >

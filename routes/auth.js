@@ -16,7 +16,7 @@ const SALT_ROUNDS = 12;
 
 router.get('/register', (req, res) => {
     if (req.session.user) {
-        return res.redirect('/catalog');
+        return res.redirect('/library/catalog');
     }
 
     res.render('auth/register', {
@@ -70,7 +70,7 @@ router.post('/register', async (req, res, next) => {
 
         await createUser(email, passwordHash);
 
-        return res.redirect('/login?registered=1');
+        return res.redirect('/library/login?registered=1');
     } catch (error) {
         // Protección adicional por si ocurre una condición
         // de carrera con el UNIQUE de users.email.
@@ -91,7 +91,7 @@ router.post('/register', async (req, res, next) => {
 
 router.get('/login', (req, res) => {
     if (req.session.user) {
-        return res.redirect('/catalog');
+        return res.redirect('/library/catalog');
     }
 
     res.render('auth/login', {
@@ -154,10 +154,10 @@ router.post('/login', async (req, res, next) => {
                 }
 
                 if (user.role === 'ADMIN') {
-                    return res.redirect('/admin');
+                    return res.redirect('/library/admin');
                 }
 
-                return res.redirect('/catalog');
+                return res.redirect('/library/catalog');
             });
         });
     } catch (error) {
@@ -171,7 +171,7 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
     if (!req.session) {
-        return res.redirect('/login');
+        return res.redirect('/library/login');
     }
 
     req.session.destroy((error) => {
@@ -181,7 +181,7 @@ router.post('/logout', (req, res, next) => {
 
         res.clearCookie('connect.sid');
 
-        return res.redirect('/login');
+        return res.redirect('/library/login');
     });
 });
 

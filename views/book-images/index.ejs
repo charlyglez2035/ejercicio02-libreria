@@ -35,7 +35,7 @@
 
     <p>
         <a
-            href="/admin/books/<%= book.book_id %>/images/new"
+            href="/library/admin/books/<%= book.book_id %>/images/new"
         >
             Subir nueva imagen
         </a>
@@ -43,7 +43,7 @@
 
     <p>
         <a
-            href="/admin/books/<%= book.book_id %>"
+            href="/library/admin/books/<%= book.book_id %>"
         >
             Regresar al libro
         </a>
@@ -99,7 +99,7 @@
 
         <p>
             <a
-                href="/admin/books/<%= book.book_id %>/images/<%= image.image_id %>/edit"
+                href="/library/admin/books/<%= book.book_id %>/images/<%= image.image_id %>/edit"
             >
                 Editar
             </a>
@@ -107,7 +107,7 @@
 
         <form
             method="POST"
-            action="/admin/books/<%= book.book_id %>/images/<%= image.image_id %>/delete"
+            action="/library/admin/books/<%= book.book_id %>/images/<%= image.image_id %>/delete"
             onsubmit="return confirm('¿Eliminar esta imagen?');"
         >
 

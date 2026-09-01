@@ -127,7 +127,7 @@ router.get('/new', async (req, res, next) => {
 
         res.render('books/form', {
             title: 'Crear libro',
-            action: '/admin/books',
+            action: '/library/admin/books',
             book: null,
             formats,
             categories,
@@ -152,7 +152,7 @@ router.post('/', async (req, res, next) => {
         if (!validation.valid) {
             return res.status(400).render('books/form', {
                 title: 'Crear libro',
-                action: '/admin/books',
+                action: '/library/admin/books',
                 book: req.body,
                 formats,
                 categories,
@@ -163,7 +163,7 @@ router.post('/', async (req, res, next) => {
         const created = await createBook(validation.book);
 
         return res.redirect(
-            `/admin/books/${created.book_id}`
+            `/library/admin/books/${created.book_id}`
         );
     } catch (error) {
         if (error.code === '23505') {
@@ -248,7 +248,7 @@ router.get('/:id/edit', async (req, res, next) => {
 
         res.render('books/form', {
             title: 'Editar libro',
-            action: `/admin/books/${bookId}`,
+            action: `/library/admin/books/${bookId}`,
             book,
             formats,
             categories,
@@ -279,7 +279,7 @@ router.post('/:id', async (req, res, next) => {
         if (!validation.valid) {
             return res.status(400).render('books/form', {
                 title: 'Editar libro',
-                action: `/admin/books/${bookId}`,
+                action: `/library/admin/books/${bookId}`,
                 book: {
                     ...req.body,
                     book_id: bookId
@@ -300,7 +300,7 @@ router.post('/:id', async (req, res, next) => {
         }
 
         return res.redirect(
-            `/admin/books/${bookId}`
+            `/library/admin/books/${bookId}`
         );
     } catch (error) {
         if (error.code === '23505') {
@@ -340,7 +340,7 @@ router.post('/:id/delete', async (req, res, next) => {
         }
 
         return res.redirect(
-            '/admin/books?message=Libro eliminado correctamente'
+            '/library/admin/books?message=Libro eliminado correctamente'
         );
     } catch (error) {
         next(error);

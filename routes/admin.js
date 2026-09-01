@@ -62,37 +62,37 @@ router.get('/', (req, res) => {
             <ul>
 
                 <li>
-                    <a href="/admin/books">
+                    <a href="/library/admin/books">
                         Administrar libros
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/authors">
+                    <a href="/library/admin/authors">
                         Administrar autores
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/genres">
+                    <a href="/library/admin/genres">
                         Administrar géneros
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/formats">
+                    <a href="/library/admin/formats">
                         Administrar formatos
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/categories">
+                    <a href="/library/admin/categories">
                         Administrar categorías
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/concepts">
+                    <a href="/library/admin/concepts">
                         Administrar conceptos
                     </a>
                 </li>
@@ -102,14 +102,14 @@ router.get('/', (req, res) => {
             <hr>
 
             <p>
-                <a href="/catalog">
+                <a href="/library/catalog">
                     Ir al catálogo
                 </a>
             </p>
 
             <form
                 method="POST"
-                action="/logout"
+                action="/library/logout"
             >
 
                 <button type="submit">

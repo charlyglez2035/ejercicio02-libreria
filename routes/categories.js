@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
             singular: 'categoría',
             items,
             idField: 'category_id',
-            basePath: '/admin/categories',
+            basePath: '/library/admin/categories',
             message: req.query.message || null
         });
     } catch (error) {
@@ -59,8 +59,8 @@ router.get('/new', (req, res) => {
     res.render('catalogs/form', {
         title: 'Crear categoría',
         label: 'Nombre de la categoría',
-        action: '/admin/categories',
-        basePath: '/admin/categories',
+        action: '/library/admin/categories',
+        basePath: '/library/admin/categories',
         item: null,
         maxLength: 120,
         error: null
@@ -86,15 +86,15 @@ router.post('/', async (req, res, next) => {
         const created = await createCategory(validation.name);
 
         return res.redirect(
-            `/admin/categories/${created.category_id}`
+            `/library/admin/categories/${created.category_id}`
         );
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Crear categoría',
                 label: 'Nombre de la categoría',
-                action: '/admin/categories',
-                basePath: '/admin/categories',
+                action: '/library/admin/categories',
+                basePath: '/library/admin/categories',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: 'Ya existe una categoría con ese nombre.'
@@ -120,7 +120,7 @@ router.get('/:id', async (req, res, next) => {
             title: 'Detalle de la categoría',
             item,
             idField: 'category_id',
-            basePath: '/admin/categories'
+            basePath: '/library/admin/categories'
         });
     } catch (error) {
         next(error);
@@ -141,8 +141,8 @@ router.get('/:id/edit', async (req, res, next) => {
         res.render('catalogs/form', {
             title: 'Editar categoría',
             label: 'Nombre de la categoría',
-            action: `/admin/categories/${id}`,
-            basePath: '/admin/categories',
+            action: `/library/admin/categories/${id}`,
+            basePath: '/library/admin/categories',
             item,
             maxLength: 120,
             error: null
@@ -161,8 +161,8 @@ router.post('/:id', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Editar categoría',
                 label: 'Nombre de la categoría',
-                action: `/admin/categories/${id}`,
-                basePath: '/admin/categories',
+                action: `/library/admin/categories/${id}`,
+                basePath: '/library/admin/categories',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: validation.message
@@ -181,15 +181,15 @@ router.post('/:id', async (req, res, next) => {
         }
 
         return res.redirect(
-            `/admin/categories/${id}`
+            `/library/admin/categories/${id}`
         );
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Editar categoría',
                 label: 'Nombre de la categoría',
-                action: `/admin/categories/${req.params.id}`,
-                basePath: '/admin/categories',
+                action: `/library/admin/categories/${req.params.id}`,
+                basePath: '/library/admin/categories',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: 'Ya existe una categoría con ese nombre.'
@@ -212,7 +212,7 @@ router.post('/:id/delete', async (req, res, next) => {
         }
 
         return res.redirect(
-            '/admin/categories?message=Categoría eliminada correctamente'
+            '/library/admin/categories?message=Categoría eliminada correctamente'
         );
     } catch (error) {
         if (error.code === '23503') {
@@ -223,7 +223,7 @@ router.post('/:id/delete', async (req, res, next) => {
                 singular: 'categoría',
                 items,
                 idField: 'category_id',
-                basePath: '/admin/categories',
+                basePath: '/library/admin/categories',
                 message:
                     'No se puede eliminar la categoría porque está siendo utilizada por uno o más libros.'
             });

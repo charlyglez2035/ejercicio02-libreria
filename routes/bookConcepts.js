@@ -160,7 +160,7 @@ router.get('/new', async (req, res, next) => {
         res.render('book-concepts/form', {
             title: 'Agregar concepto al libro',
             action:
-                `/admin/books/${bookId}/concepts`,
+                `/library/admin/books/${bookId}/concepts`,
             book,
             concepts,
             bookConcept: null,
@@ -201,7 +201,7 @@ router.post('/', async (req, res, next) => {
                     title:
                         'Agregar concepto al libro',
                     action:
-                        `/admin/books/${bookId}/concepts`,
+                        `/library/admin/books/${bookId}/concepts`,
                     book,
                     concepts,
                     bookConcept: req.body,
@@ -220,7 +220,7 @@ router.post('/', async (req, res, next) => {
         );
 
         return res.redirect(
-            `/admin/books/${bookId}/concepts?message=Concepto asociado correctamente`
+            `/library/admin/books/${bookId}/concepts?message=Concepto asociado correctamente`
         );
     } catch (error) {
         if (error.code === '23505') {
@@ -240,7 +240,7 @@ router.post('/', async (req, res, next) => {
                     title:
                         'Agregar concepto al libro',
                     action:
-                        `/admin/books/${bookId}/concepts`,
+                        `/library/admin/books/${bookId}/concepts`,
                     book,
                     concepts,
                     bookConcept: req.body,
@@ -309,7 +309,7 @@ router.get(
                     title:
                         'Editar definición',
                     action:
-                        `/admin/books/${bookId}/concepts/${conceptId}`,
+                        `/library/admin/books/${bookId}/concepts/${conceptId}`,
                     book,
                     concepts: [],
                     bookConcept,
@@ -384,7 +384,7 @@ router.post(
                         title:
                             'Editar definición',
                         action:
-                            `/admin/books/${bookId}/concepts/${conceptId}`,
+                            `/library/admin/books/${bookId}/concepts/${conceptId}`,
                         book,
                         concepts: [],
                         bookConcept: {
@@ -431,7 +431,7 @@ router.post(
             }
 
             return res.redirect(
-                `/admin/books/${bookId}/concepts?message=Definición actualizada correctamente`
+                `/library/admin/books/${bookId}/concepts?message=Definición actualizada correctamente`
             );
         } catch (error) {
             next(error);
@@ -477,7 +477,7 @@ router.post(
             }
 
             return res.redirect(
-                `/admin/books/${bookId}/concepts?message=Concepto removido del libro correctamente`
+                `/library/admin/books/${bookId}/concepts?message=Concepto removido del libro correctamente`
             );
         } catch (error) {
             next(error);

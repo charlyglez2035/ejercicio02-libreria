@@ -19,13 +19,13 @@
     <% } %>
 
     <p>
-        <a href="/admin/books/new">
+        <a href="/library/admin/books/new">
             Crear nuevo libro
         </a>
     </p>
 
     <p>
-        <a href="/admin">
+        <a href="/library/admin">
             Regresar al panel
         </a>
     </p>
@@ -82,13 +82,13 @@
                     </td>
 
                     <td>
-                        <a href="/admin/books/<%= book.book_id %>">
+                        <a href="/library/admin/books/<%= book.book_id %>">
                             Ver
                         </a>
 
                         |
 
-                        <a href="/admin/books/<%= book.book_id %>/edit">
+                        <a href="/library/admin/books/<%= book.book_id %>/edit">
                             Editar
                         </a>
 
@@ -96,7 +96,7 @@
 
                         <form
                             method="POST"
-                            action="/admin/books/<%= book.book_id %>/delete"
+                            action="/library/admin/books/<%= book.book_id %>/delete"
                             style="display:inline"
                             onsubmit="return confirm('¿Eliminar este libro?');"
                         >

@@ -315,7 +315,7 @@ router.get('/new', async (
                 title:
                     'Agregar imagen',
                 action:
-                    `/admin/books/${bookId}/images`,
+                    `/library/admin/books/${bookId}/images`,
                 book,
                 image: null,
                 isEdit: false,
@@ -460,7 +460,7 @@ router.post(
             });
 
             return res.redirect(
-                `/admin/books/${bookId}/images?message=Imagen cargada correctamente`
+                `/library/admin/books/${bookId}/images?message=Imagen cargada correctamente`
             );
         } catch (error) {
             await removeFile(
@@ -524,7 +524,7 @@ router.get(
                     title:
                         'Editar imagen',
                     action:
-                        `/admin/books/${bookId}/images/${imageId}`,
+                        `/library/admin/books/${bookId}/images/${imageId}`,
                     book,
                     image,
                     isEdit: true,
@@ -634,7 +634,7 @@ router.post(
             }
 
             return res.redirect(
-                `/admin/books/${bookId}/images?message=Imagen actualizada correctamente`
+                `/library/admin/books/${bookId}/images?message=Imagen actualizada correctamente`
             );
         } catch (error) {
             if (
@@ -748,7 +748,7 @@ router.post(
             );
 
             return res.redirect(
-                `/admin/books/${bookId}/images?message=Imagen eliminada correctamente`
+                `/library/admin/books/${bookId}/images?message=Imagen eliminada correctamente`
             );
         } catch (error) {
             next(error);

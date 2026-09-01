@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
             singular: 'formato',
             items,
             idField: 'format_id',
-            basePath: '/admin/formats',
+            basePath: '/library/admin/formats',
             message: req.query.message || null
         });
     } catch (error) {
@@ -59,8 +59,8 @@ router.get('/new', (req, res) => {
     res.render('catalogs/form', {
         title: 'Crear formato',
         label: 'Nombre del formato',
-        action: '/admin/formats',
-        basePath: '/admin/formats',
+        action: '/library/admin/formats',
+        basePath: '/library/admin/formats',
         item: null,
         maxLength: 120,
         error: null
@@ -75,8 +75,8 @@ router.post('/', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Crear formato',
                 label: 'Nombre del formato',
-                action: '/admin/formats',
-                basePath: '/admin/formats',
+                action: '/library/admin/formats',
+                basePath: '/library/admin/formats',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: validation.message
@@ -86,15 +86,15 @@ router.post('/', async (req, res, next) => {
         const created = await createFormat(validation.name);
 
         return res.redirect(
-            `/admin/formats/${created.format_id}`
+            `/library/admin/formats/${created.format_id}`
         );
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Crear formato',
                 label: 'Nombre del formato',
-                action: '/admin/formats',
-                basePath: '/admin/formats',
+                action: '/library/admin/formats',
+                basePath: '/library/admin/formats',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: 'Ya existe un formato con ese nombre.'
@@ -120,7 +120,7 @@ router.get('/:id', async (req, res, next) => {
             title: 'Detalle del formato',
             item,
             idField: 'format_id',
-            basePath: '/admin/formats'
+            basePath: '/library/admin/formats'
         });
     } catch (error) {
         next(error);
@@ -141,8 +141,8 @@ router.get('/:id/edit', async (req, res, next) => {
         res.render('catalogs/form', {
             title: 'Editar formato',
             label: 'Nombre del formato',
-            action: `/admin/formats/${id}`,
-            basePath: '/admin/formats',
+            action: `/library/admin/formats/${id}`,
+            basePath: '/library/admin/formats',
             item,
             maxLength: 120,
             error: null
@@ -161,8 +161,8 @@ router.post('/:id', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Editar formato',
                 label: 'Nombre del formato',
-                action: `/admin/formats/${id}`,
-                basePath: '/admin/formats',
+                action: `/library/admin/formats/${id}`,
+                basePath: '/library/admin/formats',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: validation.message
@@ -180,14 +180,14 @@ router.post('/:id', async (req, res, next) => {
             );
         }
 
-        return res.redirect(`/admin/formats/${id}`);
+        return res.redirect(`/library/admin/formats/${id}`);
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Editar formato',
                 label: 'Nombre del formato',
-                action: `/admin/formats/${req.params.id}`,
-                basePath: '/admin/formats',
+                action: `/library/admin/formats/${req.params.id}`,
+                basePath: '/library/admin/formats',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: 'Ya existe un formato con ese nombre.'
@@ -210,7 +210,7 @@ router.post('/:id/delete', async (req, res, next) => {
         }
 
         return res.redirect(
-            '/admin/formats?message=Formato eliminado correctamente'
+            '/library/admin/formats?message=Formato eliminado correctamente'
         );
     } catch (error) {
         if (error.code === '23503') {
@@ -221,7 +221,7 @@ router.post('/:id/delete', async (req, res, next) => {
                 singular: 'formato',
                 items,
                 idField: 'format_id',
-                basePath: '/admin/formats',
+                basePath: '/library/admin/formats',
                 message:
                     'No se puede eliminar el formato porque está siendo utilizado por uno o más libros.'
             });

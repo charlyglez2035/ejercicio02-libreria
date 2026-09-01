@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
             singular: 'género',
             items,
             idField: 'genre_id',
-            basePath: '/admin/genres',
+            basePath: '/library/admin/genres',
             message: req.query.message || null
         });
     } catch (error) {
@@ -59,8 +59,8 @@ router.get('/new', (req, res) => {
     res.render('catalogs/form', {
         title: 'Crear género',
         label: 'Nombre del género',
-        action: '/admin/genres',
-        basePath: '/admin/genres',
+        action: '/library/admin/genres',
+        basePath: '/library/admin/genres',
         item: null,
         maxLength: 120,
         error: null
@@ -75,8 +75,8 @@ router.post('/', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Crear género',
                 label: 'Nombre del género',
-                action: '/admin/genres',
-                basePath: '/admin/genres',
+                action: '/library/admin/genres',
+                basePath: '/library/admin/genres',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: validation.message
@@ -86,15 +86,15 @@ router.post('/', async (req, res, next) => {
         const created = await createGenre(validation.name);
 
         return res.redirect(
-            `/admin/genres/${created.genre_id}`
+            `/library/admin/genres/${created.genre_id}`
         );
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Crear género',
                 label: 'Nombre del género',
-                action: '/admin/genres',
-                basePath: '/admin/genres',
+                action: '/library/admin/genres',
+                basePath: '/library/admin/genres',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: 'Ya existe un género con ese nombre.'
@@ -127,7 +127,7 @@ router.get('/:id', async (req, res, next) => {
             title: 'Detalle del género',
             item,
             idField: 'genre_id',
-            basePath: '/admin/genres'
+            basePath: '/library/admin/genres'
         });
     } catch (error) {
         next(error);
@@ -149,8 +149,8 @@ router.get('/:id/edit', async (req, res, next) => {
         res.render('catalogs/form', {
             title: 'Editar género',
             label: 'Nombre del género',
-            action: `/admin/genres/${id}`,
-            basePath: '/admin/genres',
+            action: `/library/admin/genres/${id}`,
+            basePath: '/library/admin/genres',
             item,
             maxLength: 120,
             error: null
@@ -169,8 +169,8 @@ router.post('/:id', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Editar género',
                 label: 'Nombre del género',
-                action: `/admin/genres/${id}`,
-                basePath: '/admin/genres',
+                action: `/library/admin/genres/${id}`,
+                basePath: '/library/admin/genres',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: validation.message
@@ -188,14 +188,14 @@ router.post('/:id', async (req, res, next) => {
             );
         }
 
-        return res.redirect(`/admin/genres/${id}`);
+        return res.redirect(`/library/admin/genres/${id}`);
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Editar género',
                 label: 'Nombre del género',
-                action: `/admin/genres/${req.params.id}`,
-                basePath: '/admin/genres',
+                action: `/library/admin/genres/${req.params.id}`,
+                basePath: '/library/admin/genres',
                 item: { name: req.body.name || '' },
                 maxLength: 120,
                 error: 'Ya existe un género con ese nombre.'
@@ -219,7 +219,7 @@ router.post('/:id/delete', async (req, res, next) => {
         }
 
         return res.redirect(
-            '/admin/genres?message=Género eliminado correctamente'
+            '/library/admin/genres?message=Género eliminado correctamente'
         );
     } catch (error) {
         if (error.code === '23503') {
@@ -230,7 +230,7 @@ router.post('/:id/delete', async (req, res, next) => {
                 singular: 'género',
                 items,
                 idField: 'genre_id',
-                basePath: '/admin/genres',
+                basePath: '/library/admin/genres',
                 message:
                     'No se puede eliminar el género porque está asociado a uno o más libros.'
             });

@@ -69,7 +69,7 @@ router.get('/', async (req, res, next) => {
 router.get('/new', (req, res) => {
     res.render('authors/form', {
         title: 'Crear autor',
-        action: '/admin/authors',
+        action: '/library/admin/authors',
         author: null,
         error: null
     });
@@ -87,7 +87,7 @@ router.post('/', async (req, res, next) => {
         if (!validation.valid) {
             return res.status(400).render('authors/form', {
                 title: 'Crear autor',
-                action: '/admin/authors',
+                action: '/library/admin/authors',
                 author: {
                     name: req.body.name || ''
                 },
@@ -100,7 +100,7 @@ router.post('/', async (req, res, next) => {
         );
 
         return res.redirect(
-            `/admin/authors/${created.author_id}`
+            `/library/admin/authors/${created.author_id}`
         );
     } catch (error) {
         next(error);
@@ -169,7 +169,7 @@ router.get('/:id/edit', async (req, res, next) => {
 
         res.render('authors/form', {
             title: 'Editar autor',
-            action: `/admin/authors/${authorId}`,
+            action: `/library/admin/authors/${authorId}`,
             author,
             error: null
         });
@@ -201,7 +201,7 @@ router.post('/:id', async (req, res, next) => {
         if (!validation.valid) {
             return res.status(400).render('authors/form', {
                 title: 'Editar autor',
-                action: `/admin/authors/${authorId}`,
+                action: `/library/admin/authors/${authorId}`,
                 author: {
                     author_id: authorId,
                     name: req.body.name || ''
@@ -222,7 +222,7 @@ router.post('/:id', async (req, res, next) => {
         }
 
         return res.redirect(
-            `/admin/authors/${authorId}`
+            `/library/admin/authors/${authorId}`
         );
     } catch (error) {
         next(error);
@@ -256,7 +256,7 @@ router.post('/:id/delete', async (req, res, next) => {
         }
 
         return res.redirect(
-            '/admin/authors?message=Autor eliminado correctamente'
+            '/library/admin/authors?message=Autor eliminado correctamente'
         );
     } catch (error) {
         // FK RESTRICT de book_authors -> authors.

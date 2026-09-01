@@ -33,7 +33,7 @@
 
     <p>
         <a
-            href="/admin/books/<%= book.book_id %>/concepts/new"
+            href="/library/admin/books/<%= book.book_id %>/concepts/new"
         >
             Agregar concepto
         </a>
@@ -41,7 +41,7 @@
 
     <p>
         <a
-            href="/admin/books/<%= book.book_id %>"
+            href="/library/admin/books/<%= book.book_id %>"
         >
             Regresar al libro
         </a>
@@ -91,7 +91,7 @@
                     <td>
 
                         <a
-                            href="/admin/books/<%= book.book_id %>/concepts/<%= item.concept_id %>/edit"
+                            href="/library/admin/books/<%= book.book_id %>/concepts/<%= item.concept_id %>/edit"
                         >
                             Editar
                         </a>
@@ -100,7 +100,7 @@
 
                         <form
                             method="POST"
-                            action="/admin/books/<%= book.book_id %>/concepts/<%= item.concept_id %>/delete"
+                            action="/library/admin/books/<%= book.book_id %>/concepts/<%= item.concept_id %>/delete"
                             style="display:inline"
                             onsubmit="return confirm('¿Eliminar esta definición del libro?');"
                         >

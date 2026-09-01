@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
             singular: 'concepto',
             items,
             idField: 'concept_id',
-            basePath: '/admin/concepts',
+            basePath: '/library/admin/concepts',
             message: req.query.message || null
         });
     } catch (error) {
@@ -59,8 +59,8 @@ router.get('/new', (req, res) => {
     res.render('catalogs/form', {
         title: 'Crear concepto',
         label: 'Nombre del concepto',
-        action: '/admin/concepts',
-        basePath: '/admin/concepts',
+        action: '/library/admin/concepts',
+        basePath: '/library/admin/concepts',
         item: null,
         maxLength: 160,
         error: null
@@ -75,8 +75,8 @@ router.post('/', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Crear concepto',
                 label: 'Nombre del concepto',
-                action: '/admin/concepts',
-                basePath: '/admin/concepts',
+                action: '/library/admin/concepts',
+                basePath: '/library/admin/concepts',
                 item: { name: req.body.name || '' },
                 maxLength: 160,
                 error: validation.message
@@ -86,15 +86,15 @@ router.post('/', async (req, res, next) => {
         const created = await createConcept(validation.name);
 
         return res.redirect(
-            `/admin/concepts/${created.concept_id}`
+            `/library/admin/concepts/${created.concept_id}`
         );
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Crear concepto',
                 label: 'Nombre del concepto',
-                action: '/admin/concepts',
-                basePath: '/admin/concepts',
+                action: '/library/admin/concepts',
+                basePath: '/library/admin/concepts',
                 item: { name: req.body.name || '' },
                 maxLength: 160,
                 error: 'Ya existe un concepto con ese nombre.'
@@ -120,7 +120,7 @@ router.get('/:id', async (req, res, next) => {
             title: 'Detalle del concepto',
             item,
             idField: 'concept_id',
-            basePath: '/admin/concepts'
+            basePath: '/library/admin/concepts'
         });
     } catch (error) {
         next(error);
@@ -141,8 +141,8 @@ router.get('/:id/edit', async (req, res, next) => {
         res.render('catalogs/form', {
             title: 'Editar concepto',
             label: 'Nombre del concepto',
-            action: `/admin/concepts/${id}`,
-            basePath: '/admin/concepts',
+            action: `/library/admin/concepts/${id}`,
+            basePath: '/library/admin/concepts',
             item,
             maxLength: 160,
             error: null
@@ -161,8 +161,8 @@ router.post('/:id', async (req, res, next) => {
             return res.status(400).render('catalogs/form', {
                 title: 'Editar concepto',
                 label: 'Nombre del concepto',
-                action: `/admin/concepts/${id}`,
-                basePath: '/admin/concepts',
+                action: `/library/admin/concepts/${id}`,
+                basePath: '/library/admin/concepts',
                 item: { name: req.body.name || '' },
                 maxLength: 160,
                 error: validation.message
@@ -181,15 +181,15 @@ router.post('/:id', async (req, res, next) => {
         }
 
         return res.redirect(
-            `/admin/concepts/${id}`
+            `/library/admin/concepts/${id}`
         );
     } catch (error) {
         if (error.code === '23505') {
             return res.status(409).render('catalogs/form', {
                 title: 'Editar concepto',
                 label: 'Nombre del concepto',
-                action: `/admin/concepts/${req.params.id}`,
-                basePath: '/admin/concepts',
+                action: `/library/admin/concepts/${req.params.id}`,
+                basePath: '/library/admin/concepts',
                 item: { name: req.body.name || '' },
                 maxLength: 160,
                 error: 'Ya existe un concepto con ese nombre.'
@@ -212,7 +212,7 @@ router.post('/:id/delete', async (req, res, next) => {
         }
 
         return res.redirect(
-            '/admin/concepts?message=Concepto eliminado correctamente'
+            '/library/admin/concepts?message=Concepto eliminado correctamente'
         );
     } catch (error) {
         if (error.code === '23503') {
@@ -223,7 +223,7 @@ router.post('/:id/delete', async (req, res, next) => {
                 singular: 'concepto',
                 items,
                 idField: 'concept_id',
-                basePath: '/admin/concepts',
+                basePath: '/library/admin/concepts',
                 message:
                     'No se puede eliminar el concepto porque está asociado a uno o más libros.'
             });

@@ -1,6 +1,6 @@
 function requireAdmin(req, res, next) {
     if (!req.session || !req.session.user) {
-        return res.redirect('/login');
+        return res.redirect('/library/login');
     }
 
     if (req.session.user.role !== 'ADMIN') {

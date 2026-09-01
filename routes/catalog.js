@@ -17,7 +17,7 @@ router.get('/', requireAuth, (req, res) => {
             ${req.session.user.role}
         </p>
 
-        <form method="POST" action="/logout">
+        <form method="POST" action="/library/logout">
             <button type="submit">
                 Cerrar sesión
             </button>
