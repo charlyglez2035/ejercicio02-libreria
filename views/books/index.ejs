@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Administrar libros</title>
+</head>
+
+<body>
+
+    <h1>Administración de libros</h1>
+
+    <% if (message) { %>
+        <p><%= message %></p>
+    <% } %>
+
+    <p>
+        <a href="/admin/books/new">
+            Crear nuevo libro
+        </a>
+    </p>
+
+    <p>
+        <a href="/admin">
+            Regresar al panel
+        </a>
+    </p>
+
+    <table border="1" cellpadding="6">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ISBN</th>
+                <th>Título</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Formato</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <% for (const book of books) { %>
+
+                <tr>
+                    <td><%= book.book_id %></td>
+
+                    <td>
+                        <%= book.isbn %>
+                    </td>
+
+                    <td>
+                        <%= book.title %>
+                    </td>
+
+                    <td>
+                        <%= book.publication_year %>
+                    </td>
+
+                    <td>
+                        $<%= book.price %>
+                    </td>
+
+                    <td>
+                        <%= book.stock %>
+                    </td>
+
+                    <td>
+                        <%= book.format_name %>
+                    </td>
+
+                    <td>
+                        <%= book.category_name %>
+                    </td>
+
+                    <td>
+                        <a href="/admin/books/<%= book.book_id %>">
+                            Ver
+                        </a>
+
+                        |
+
+                        <a href="/admin/books/<%= book.book_id %>/edit">
+                            Editar
+                        </a>
+
+                        |
+
+                        <form
+                            method="POST"
+                            action="/admin/books/<%= book.book_id %>/delete"
+                            style="display:inline"
+                            onsubmit="return confirm('¿Eliminar este libro?');"
+                        >
+                            <button type="submit">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+            <% } %>
+
+        </tbody>
+
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title><%= title %></title>
+</head>
+
+<body>
+
+    <h1><%= title %></h1>
+
+    <% if (error) { %>
+        <p>
+            <strong>Error:</strong>
+            <%= error %>
+        </p>
+    <% } %>
+
+    <form
+        method="POST"
+        action="<%= action %>"
+    >
+
+        <div>
+            <label for="isbn">
+                ISBN
+            </label>
+
+            <input
+                type="text"
+                id="isbn"
+                name="isbn"
+                maxlength="20"
+                value="<%= book ? book.isbn : '' %>"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="title">
+                Título
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                maxlength="255"
+                value="<%= book ? book.title : '' %>"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="publicationYear">
+                Año de publicación
+            </label>
+
+            <input
+                type="number"
+                id="publicationYear"
+                name="publicationYear"
+                min="1"
+                max="9999"
+                value="<%= book ? (book.publication_year || book.publicationYear || '') : '' %>"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="price">
+                Precio
+            </label>
+
+            <input
+                type="number"
+                id="price"
+                name="price"
+                min="0"
+                step="0.01"
+                value="<%= book ? book.price : '' %>"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="stock">
+                Stock
+            </label>
+
+            <input
+                type="number"
+                id="stock"
+                name="stock"
+                min="0"
+                step="1"
+                value="<%= book ? book.stock : '0' %>"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="formatId">
+                Formato
+            </label>
+
+            <select
+                id="formatId"
+                name="formatId"
+                required
+            >
+
+                <option value="">
+                    Selecciona un formato
+                </option>
+
+                <% for (const format of formats) { %>
+
+                    <option
+                        value="<%= format.format_id %>"
+                        <%
+                        if (
+                            book &&
+                            Number(
+                                book.format_id ||
+                                book.formatId
+                            ) === Number(format.format_id)
+                        ) {
+                        %>
+                            selected
+                        <% } %>
+                    >
+                        <%= format.name %>
+                    </option>
+
+                <% } %>
+
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="categoryId">
+                Categoría
+            </label>
+
+            <select
+                id="categoryId"
+                name="categoryId"
+                required
+            >
+
+                <option value="">
+                    Selecciona una categoría
+                </option>
+
+                <% for (const category of categories) { %>
+
+                    <option
+                        value="<%= category.category_id %>"
+                        <%
+                        if (
+                            book &&
+                            Number(
+                                book.category_id ||
+                                book.categoryId
+                            ) === Number(category.category_id)
+                        ) {
+                        %>
+                            selected
+                        <% } %>
+                    >
+                        <%= category.name %>
+                    </option>
+
+                <% } %>
+
+            </select>
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Guardar
+        </button>
+
+    </form>
+
+    <p>
+        <a href="/admin/books">
+            Cancelar
+        </a>
+    </p>
+
+</body>
+</html>

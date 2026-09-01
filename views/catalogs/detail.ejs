@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title><%= title %></title>
+</head>
+
+<body>
+
+    <h1><%= title %></h1>
+
+    <p>
+        <strong>ID:</strong>
+        <%= item[idField] %>
+    </p>
+
+    <p>
+        <strong>Nombre:</strong>
+        <%= item.name %>
+    </p>
+
+    <p>
+        <a
+            href="<%= basePath %>/<%= item[idField] %>/edit"
+        >
+            Editar
+        </a>
+    </p>
+
+    <p>
+        <a href="<%= basePath %>">
+            Regresar al listado
+        </a>
+    </p>
+
+</body>
+
+</html>

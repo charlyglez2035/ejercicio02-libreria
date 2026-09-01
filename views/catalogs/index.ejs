@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title><%= title %></title>
+</head>
+
+<body>
+
+    <h1><%= title %></h1>
+
+    <% if (message) { %>
+        <p>
+            <strong><%= message %></strong>
+        </p>
+    <% } %>
+
+    <p>
+        <a href="<%= basePath %>/new">
+            Crear nuevo <%= singular %>
+        </a>
+    </p>
+
+    <p>
+        <a href="/admin">
+            Regresar al panel
+        </a>
+    </p>
+
+    <table
+        border="1"
+        cellpadding="6"
+    >
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <% for (const item of items) { %>
+
+                <tr>
+
+                    <td>
+                        <%= item[idField] %>
+                    </td>
+
+                    <td>
+                        <%= item.name %>
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="<%= basePath %>/<%= item[idField] %>"
+                        >
+                            Ver
+                        </a>
+
+                        |
+
+                        <a
+                            href="<%= basePath %>/<%= item[idField] %>/edit"
+                        >
+                            Editar
+                        </a>
+
+                        |
+
+                        <form
+                            method="POST"
+                            action="<%= basePath %>/<%= item[idField] %>/delete"
+                            style="display:inline"
+                            onsubmit="return confirm('¿Confirmas la eliminación?');"
+                        >
+
+                            <button type="submit">
+                                Eliminar
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            <% } %>
+
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

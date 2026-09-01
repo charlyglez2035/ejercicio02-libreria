@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Conceptos de <%= book.title %>
+    </title>
+</head>
+
+<body>
+
+    <h1>
+        Conceptos de <%= book.title %>
+    </h1>
+
+    <p>
+        <strong>ISBN:</strong>
+        <%= book.isbn %>
+    </p>
+
+    <% if (message) { %>
+        <p>
+            <strong><%= message %></strong>
+        </p>
+    <% } %>
+
+    <p>
+        <a
+            href="/admin/books/<%= book.book_id %>/concepts/new"
+        >
+            Agregar concepto
+        </a>
+    </p>
+
+    <p>
+        <a
+            href="/admin/books/<%= book.book_id %>"
+        >
+            Regresar al libro
+        </a>
+    </p>
+
+    <table
+        border="1"
+        cellpadding="6"
+    >
+
+        <thead>
+
+            <tr>
+                <th>Concepto</th>
+                <th>Definición</th>
+                <th>Capítulo</th>
+                <th>Página</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <% for (
+                const item of bookConcepts
+            ) { %>
+
+                <tr>
+
+                    <td>
+                        <%= item.concept_name %>
+                    </td>
+
+                    <td>
+                        <%= item.definition %>
+                    </td>
+
+                    <td>
+                        <%= item.chapter_reference || '-' %>
+                    </td>
+
+                    <td>
+                        <%= item.page_reference || '-' %>
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="/admin/books/<%= book.book_id %>/concepts/<%= item.concept_id %>/edit"
+                        >
+                            Editar
+                        </a>
+
+                        |
+
+                        <form
+                            method="POST"
+                            action="/admin/books/<%= book.book_id %>/concepts/<%= item.concept_id %>/delete"
+                            style="display:inline"
+                            onsubmit="return confirm('¿Eliminar esta definición del libro?');"
+                        >
+
+                            <button type="submit">
+                                Eliminar
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            <% } %>
+
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Imágenes de <%= book.title %>
+    </title>
+</head>
+
+<body>
+
+    <h1>
+        Imágenes de <%= book.title %>
+    </h1>
+
+    <p>
+        <strong>ISBN:</strong>
+        <%= book.isbn %>
+    </p>
+
+    <% if (message) { %>
+        <p>
+            <strong>
+                <%= message %>
+            </strong>
+        </p>
+    <% } %>
+
+    <p>
+        <a
+            href="/admin/books/<%= book.book_id %>/images/new"
+        >
+            Subir nueva imagen
+        </a>
+    </p>
+
+    <p>
+        <a
+            href="/admin/books/<%= book.book_id %>"
+        >
+            Regresar al libro
+        </a>
+    </p>
+
+    <% if (images.length === 0) { %>
+
+        <p>
+            Este libro todavía no tiene imágenes.
+        </p>
+
+    <% } %>
+
+    <% for (const image of images) { %>
+
+        <hr>
+
+        <h2>
+            Imagen #<%= image.image_id %>
+        </h2>
+
+        <p>
+            <% if (image.is_cover) { %>
+                <strong>PORTADA</strong>
+            <% } %>
+        </p>
+
+        <img
+            src="/<%= image.file_path %>"
+            alt="<%= image.alt_text %>"
+            style="max-width: 300px; max-height: 300px;"
+        >
+
+        <p>
+            <strong>Texto alternativo:</strong>
+            <%= image.alt_text %>
+        </p>
+
+        <p>
+            <strong>Tipo MIME:</strong>
+            <%= image.mime_type %>
+        </p>
+
+        <p>
+            <strong>Tamaño:</strong>
+            <%= image.file_size_bytes %> bytes
+        </p>
+
+        <p>
+            <strong>Archivo:</strong>
+            <%= image.file_name %>
+        </p>
+
+        <p>
+            <a
+                href="/admin/books/<%= book.book_id %>/images/<%= image.image_id %>/edit"
+            >
+                Editar
+            </a>
+        </p>
+
+        <form
+            method="POST"
+            action="/admin/books/<%= book.book_id %>/images/<%= image.image_id %>/delete"
+            onsubmit="return confirm('¿Eliminar esta imagen?');"
+        >
+
+            <button type="submit">
+                Eliminar
+            </button>
+
+        </form>
+
+    <% } %>
+
+</body>
+
+</html>

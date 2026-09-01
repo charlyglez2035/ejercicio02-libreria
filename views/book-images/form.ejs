@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+
+    <h1>
+        <%= title %>
+    </h1>
+
+    <h2>
+        <%= book.title %>
+    </h2>
+
+    <% if (error) { %>
+
+        <p>
+            <strong>Error:</strong>
+            <%= error %>
+        </p>
+
+    <% } %>
+
+    <form
+        method="POST"
+        action="<%= action %>"
+        <% if (!isEdit) { %>
+            enctype="multipart/form-data"
+        <% } %>
+    >
+
+        <% if (!isEdit) { %>
+
+            <div>
+
+                <label for="image">
+                    Archivo de imagen
+                </label>
+
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    required
+                >
+
+                <p>
+                    JPG, PNG o WebP.
+                    Máximo 5 MB.
+                </p>
+
+            </div>
+
+            <br>
+
+        <% } else { %>
+
+            <p>
+                <strong>Archivo:</strong>
+                <%= image.file_name %>
+            </p>
+
+            <img
+                src="/<%= image.file_path %>"
+                alt="<%= image.alt_text %>"
+                style="max-width: 300px; max-height: 300px;"
+            >
+
+            <br><br>
+
+        <% } %>
+
+        <div>
+
+            <label for="altText">
+                Texto alternativo
+            </label>
+
+            <br>
+
+            <input
+                type="text"
+                id="altText"
+                name="altText"
+                maxlength="500"
+                value="<%= image ? (image.alt_text || image.altText || '') : '' %>"
+                required
+            >
+
+        </div>
+
+        <br>
+
+        <div>
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    name="isCover"
+                    <% if (
+                        image &&
+                        (
+                            image.is_cover === true ||
+                            image.isCover === 'on'
+                        )
+                    ) { %>
+                        checked
+                    <% } %>
+                >
+
+                Marcar como portada
+
+            </label>
+
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Guardar
+        </button>
+
+    </form>
+
+    <p>
+        <a
+            href="/admin/books/<%= book.book_id %>/images"
+        >
+            Cancelar
+        </a>
+    </p>
+
+</body>
+
+</html>

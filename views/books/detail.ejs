@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        <%= book.title %> | Librería
+    </title>
+
+</head>
+
+<body>
+
+    <h1>
+        <%= book.title %>
+    </h1>
+
+    <hr>
+
+    <h2>
+        Información del libro
+    </h2>
+
+    <p>
+        <strong>ID:</strong>
+        <%= book.book_id %>
+    </p>
+
+    <p>
+        <strong>ISBN:</strong>
+        <%= book.isbn %>
+    </p>
+
+    <p>
+        <strong>Título:</strong>
+        <%= book.title %>
+    </p>
+
+    <p>
+        <strong>Año de publicación:</strong>
+        <%= book.publication_year %>
+    </p>
+
+    <p>
+        <strong>Precio:</strong>
+        $<%= book.price %>
+    </p>
+
+    <p>
+        <strong>Stock:</strong>
+        <%= book.stock %>
+    </p>
+
+    <p>
+        <strong>Formato:</strong>
+        <%= book.format_name %>
+    </p>
+
+    <p>
+        <strong>Categoría:</strong>
+        <%= book.category_name %>
+    </p>
+
+    <hr>
+
+    <h2>
+        Administración
+    </h2>
+
+    <p>
+
+        <a
+            href="/admin/books/<%= book.book_id %>/edit"
+        >
+            Editar libro
+        </a>
+
+    </p>
+
+    <p>
+
+        <a
+            href="/admin/books/<%= book.book_id %>/concepts"
+        >
+            Administrar conceptos y definiciones
+        </a>
+
+    </p>
+
+    <p>
+
+        <a
+            href="/admin/books/<%= book.book_id %>/images"
+        >
+            Administrar imágenes
+        </a>
+
+    </p>
+
+    <hr>
+
+    <h2>
+        Eliminar libro
+    </h2>
+
+    <form
+        method="POST"
+        action="/admin/books/<%= book.book_id %>/delete"
+        onsubmit="
+            return confirm(
+                '¿Estás seguro de que deseas eliminar este libro?'
+            );
+        "
+    >
+
+        <button type="submit">
+            Eliminar libro
+        </button>
+
+    </form>
+
+    <hr>
+
+    <p>
+
+        <a href="/admin/books">
+            Regresar al listado de libros
+        </a>
+
+    </p>
+
+    <p>
+
+        <a href="/admin">
+            Regresar al panel de administración
+        </a>
+
+    </p>
+
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title><%= title %></title>
+</head>
+
+<body>
+
+    <h1><%= title %></h1>
+
+    <h2>
+        <%= book.title %>
+    </h2>
+
+    <% if (error) { %>
+
+        <p>
+            <strong>Error:</strong>
+            <%= error %>
+        </p>
+
+    <% } %>
+
+    <form
+        method="POST"
+        action="<%= action %>"
+    >
+
+        <% if (!isEdit) { %>
+
+            <div>
+
+                <label for="conceptId">
+                    Concepto
+                </label>
+
+                <select
+                    id="conceptId"
+                    name="conceptId"
+                    required
+                >
+
+                    <option value="">
+                        Selecciona un concepto
+                    </option>
+
+                    <% for (
+                        const concept of concepts
+                    ) { %>
+
+                        <option
+                            value="<%= concept.concept_id %>"
+                        >
+                            <%= concept.name %>
+                        </option>
+
+                    <% } %>
+
+                </select>
+
+            </div>
+
+            <br>
+
+        <% } else { %>
+
+            <p>
+                <strong>Concepto:</strong>
+                <%= bookConcept.concept_name %>
+            </p>
+
+        <% } %>
+
+        <div>
+
+            <label for="definition">
+                Definición
+            </label>
+
+            <br>
+
+            <textarea
+                id="definition"
+                name="definition"
+                rows="6"
+                cols="70"
+                required
+            ><%= bookConcept ? bookConcept.definition || '' : '' %></textarea>
+
+        </div>
+
+        <br>
+
+        <div>
+
+            <label for="chapterReference">
+                Referencia de capítulo
+            </label>
+
+            <input
+                type="text"
+                id="chapterReference"
+                name="chapterReference"
+                maxlength="120"
+                value="<%= bookConcept ? (bookConcept.chapter_reference || bookConcept.chapterReference || '') : '' %>"
+            >
+
+        </div>
+
+        <br>
+
+        <div>
+
+            <label for="pageReference">
+                Referencia de página
+            </label>
+
+            <input
+                type="text"
+                id="pageReference"
+                name="pageReference"
+                maxlength="50"
+                value="<%= bookConcept ? (bookConcept.page_reference || bookConcept.pageReference || '') : '' %>"
+            >
+
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Guardar
+        </button>
+
+    </form>
+
+    <p>
+        <a
+            href="/admin/books/<%= book.book_id %>/concepts"
+        >
+            Cancelar
+        </a>
+    </p>
+
+</body>
+
+</html>
